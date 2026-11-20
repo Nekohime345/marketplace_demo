@@ -1,0 +1,23 @@
+.market-layout{display:grid;grid-template-columns:177px minmax(0,1fr);gap:34px;align-items:start}
+.category-sidebar{border-right:1px solid var(--line);padding:3px 22px 10px 0;position:sticky;top:22px}
+.category-sidebar h3{font:500 23px 'Playfair Display',Georgia,serif;letter-spacing:-.5px;margin:9px 0 18px}
+.category-list{display:grid;gap:3px;max-height:590px;overflow-y:auto;padding-right:7px;scrollbar-width:thin;scrollbar-color:#d9ddcf transparent}
+.category-option{border:0;background:transparent;text-align:left;padding:8px 9px;color:#77796e;font-size:10px;cursor:pointer;transition:background .15s,color .15s}
+.category-option:hover{background:#f0f0e9;color:#444a3c}
+.category-option.active{background:#e9ecdf;color:#48533d;font-weight:600}
+.sidebar-sell{margin-top:18px;padding:12px 8px 0;border:0;border-top:1px solid var(--line);background:transparent;text-align:left;color:#898a80;font-size:9px;line-height:1.6;cursor:pointer}
+.sidebar-sell b{display:block;color:#526044;font-weight:600}
+.market-results{min-width:0}
+.market-results .controls{margin-bottom:22px}
+.results-label{font-size:8px;letter-spacing:1.4px;color:#929388}
+.market-results .toolbar{margin-left:auto}
+.market-results .search{width:230px}
+.market-results .listing-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 19px}
+.market-results .card-image{height:auto;aspect-ratio:1.42}
+.market-results .card-info h3{font-size:16px}
+.market-results .card-info p{min-height:34px}
+.market-results .more-row{margin-top:31px}
+.category-list::-webkit-scrollbar{width:3px}
+.category-list::-webkit-scrollbar-thumb{background:#d9ddcf}
+@media(max-width:1000px){.market-layout{grid-template-columns:148px minmax(0,1fr);gap:23px}.category-sidebar{padding-right:14px}.market-results .listing-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.market-results .card-image{aspect-ratio:1.3}}
+@media(max-width:650px){.market-layout{display:flex;flex-direction:column;gap:20px}.category-sidebar{position:static;width:100%;border-right:0;border-bottom:1px solid var(--line);padding:0 0 13px}.category-sidebar .eyebrow{font-size:8px}.category-sidebar h3{font-size:19px;margin:6px 0 10px}.category-list{display:flex;gap:6px;max-height:none;overflow-x:auto;overflow-y:hidden;padding:0 0 5px;scrollbar-width:none}.category-list::-webkit-scrollbar{display:none}.category-option{flex:0 0 auto;border:1px solid var(--line);padding:8px 10px;font-size:9px}.category-option.active{border-color:#e1e5d6}.sidebar-sell{display:none}.market-results{width:100%}.market-results .controls{gap:10px}.market-results .search{width:auto;min-width:0;flex:1}.market-results .results-label{font-size:7px}.market-results .listing-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 12px}.market-results .card-image{aspect-ratio:.95}.market-results .card-info h3{font-size:14px}.market-results .card-info p{min-height:unset}}

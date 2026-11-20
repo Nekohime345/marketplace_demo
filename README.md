@@ -14,7 +14,7 @@ Open http://localhost:3000. The marketplace starts empty and displays only listi
 ## Connect Supabase
 
 1. Create a Supabase project at https://supabase.com.
-2. In the SQL Editor, run [`supabase/setup.sql`](supabase/setup.sql).
+2. In the SQL Editor, run [`supabase/setup.sql`](supabase/setup.sql). It creates the tables and access policies, and adds seller name, location, and category fields used by the listing preview and details.
 3. Copy `.env.example` to `.env.local` and fill in the project URL and **publishable/anon** key from Project Settings → API. These values are public browser credentials; never use a service role key here.
 4. Restart `npm run dev`.
 

@@ -7,10 +7,26 @@ create table if not exists public.listings (
   description text not null check (char_length(description) between 1 and 1200),
   price numeric(10, 2) not null check (price > 0),
   email text not null check (char_length(email) <= 254),
-  category text not null check (category in ('Furniture', 'Electronics', 'Home & garden', 'Fashion', 'Sports')),
+  category text not null,
   image_url text not null,
+  seller_name text not null default 'Good neighbor',
+  location text,
   created_at timestamptz not null default now()
 );
+
+alter table public.listings add column if not exists seller_name text;
+alter table public.listings add column if not exists location text;
+update public.listings set seller_name = 'Good neighbor' where seller_name is null;
+alter table public.listings alter column seller_name set default 'Good neighbor';
+alter table public.listings alter column seller_name set not null;
+alter table public.listings drop constraint if exists listings_category_check;
+alter table public.listings add constraint listings_category_check check (category in (
+  'Furniture', 'Electronics', 'Home & garden', 'Fashion', 'Sports', 'Vehicles',
+  'Property Rentals', 'Apparel', 'Entertainment', 'Family', 'Free Stuff',
+  'Garden & Outdoor', 'Hobbies', 'Home Goods', 'Home Improvement', 'Home Sales',
+  'Musical Instruments', 'Office Supplies', 'Pet Supplies', 'Sporting Goods',
+  'Toys & Games', 'Buy and sell groups'
+));
 
 create table if not exists public.messages (
   id uuid primary key default gen_random_uuid(),
@@ -23,10 +39,13 @@ create table if not exists public.messages (
 alter table public.listings enable row level security;
 alter table public.messages enable row level security;
 
+drop policy if exists "Anyone can view listings" on public.listings;
 create policy "Anyone can view listings" on public.listings
   for select to anon, authenticated using (true);
+drop policy if exists "Anyone can create listings" on public.listings;
 create policy "Anyone can create listings" on public.listings
   for insert to anon, authenticated with check (true);
+drop policy if exists "Anyone can send seller messages" on public.messages;
 create policy "Anyone can send seller messages" on public.messages
   for insert to anon, authenticated with check (true);
 
@@ -40,8 +59,10 @@ values ('listing-images', 'listing-images', true, 5242880, array['image/jpeg', '
 on conflict (id) do update set public = true, file_size_limit = 5242880,
   allowed_mime_types = array['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
+drop policy if exists "Anyone can upload listing photos" on storage.objects;
 create policy "Anyone can upload listing photos" on storage.objects
   for insert to anon, authenticated with check (bucket_id = 'listing-images');
+drop policy if exists "Anyone can view listing photos" on storage.objects;
 create policy "Anyone can view listing photos" on storage.objects
   for select to anon, authenticated using (bucket_id = 'listing-images');
 
