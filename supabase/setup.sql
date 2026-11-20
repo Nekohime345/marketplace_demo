@@ -30,6 +30,11 @@ create policy "Anyone can create listings" on public.listings
 create policy "Anyone can send seller messages" on public.messages
   for insert to anon, authenticated with check (true);
 
+-- Table grants are needed in addition to RLS policies for the REST API roles.
+grant usage on schema public to anon, authenticated;
+grant select, insert on public.listings to anon, authenticated;
+grant insert on public.messages to anon, authenticated;
+
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values ('listing-images', 'listing-images', true, 5242880, array['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
 on conflict (id) do update set public = true, file_size_limit = 5242880,
@@ -39,3 +44,5 @@ create policy "Anyone can upload listing photos" on storage.objects
   for insert to anon, authenticated with check (bucket_id = 'listing-images');
 create policy "Anyone can view listing photos" on storage.objects
   for select to anon, authenticated using (bucket_id = 'listing-images');
+
+grant select, insert on storage.objects to anon, authenticated;

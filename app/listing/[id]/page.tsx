@@ -6,23 +6,14 @@ import { Suspense } from "react";
 import { useEffect, useState } from "react";
 import { loadListing, saveMessage, type Listing } from "../../supabase";
 
-const demos: Record<string, Listing> = {
-  "demo-1": { id: "demo-1", title: "The Sunday lounge chair", description: "A little mid-century magic. Solid oak frame, lovely linen upholstery, and the best reading nook in the house. Excellent condition.", price: 285, category: "Furniture", email: "hello@example.com", image_url: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=1200&q=90", created_at: "2026-11-16T10:00:00Z" },
-  "demo-2": { id: "demo-2", title: "Film camera, ready to shoot", description: "A dependable 35mm point-and-shoot with a sharp lens. Comes with a strap and fresh batteries. Tested and working perfectly.", price: 140, category: "Electronics", email: "hello@example.com", image_url: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&q=90", created_at: "2026-11-15T10:00:00Z" },
-  "demo-3": { id: "demo-3", title: "Hand-thrown breakfast set", description: "Four speckled stoneware pieces, made by hand in a tiny studio. Dishwasher safe, and each one is a little different.", price: 68, category: "Home & garden", email: "hello@example.com", image_url: "https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?auto=format&fit=crop&w=1200&q=90", created_at: "2026-11-14T10:00:00Z" },
-  "demo-4": { id: "demo-4", title: "Everyday leather tote", description: "Soft, sturdy leather with room for your laptop, a book, and everything else. Gently used and beautifully broken in.", price: 92, category: "Fashion", email: "hello@example.com", image_url: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=1200&q=90", created_at: "2026-11-13T10:00:00Z" },
-  "demo-5": { id: "demo-5", title: "A lamp for slow evenings", description: "Warm light, sculptural shape. This vintage lamp has a brass finish and includes a new linen shade.", price: 75, category: "Home & garden", email: "hello@example.com", image_url: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1200&q=90", created_at: "2026-11-12T10:00:00Z" },
-  "demo-6": { id: "demo-6", title: "Weekend road bike", description: "Lightweight aluminum frame, recently tuned, ready for its next adventure. Fits riders around 5'6\" to 5'10\".", price: 320, category: "Sports", email: "hello@example.com", image_url: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=1200&q=90", created_at: "2026-11-11T10:00:00Z" },
-};
-
 export default function ListingPage() {
   return <Suspense fallback={<div className="detail-loading">Finding the details…</div>}><ListingContent /></Suspense>;
 }
 
 function ListingContent() {
   const { id } = useParams<{ id: string }>();
-  const [item, setItem] = useState<Listing | null>(demos[id] ?? null);
-  const [loading, setLoading] = useState(!demos[id]);
+  const [item, setItem] = useState<Listing | null>(null);
+  const [loading, setLoading] = useState(true);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);

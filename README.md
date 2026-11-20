@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000. Without Supabase configuration, the app displays sample listings as a preview.
+Open http://localhost:3000. The marketplace starts empty and displays only listings stored in Supabase.
 
 ## Connect Supabase
 

@@ -13,7 +13,6 @@ export async function loadListings(): Promise<Listing[] | null> {
   return response.json();
 }
 export async function loadListing(id: string): Promise<Listing | null> {
-  if (id.startsWith("demo-")) return null;
   if (!isConfigured()) return null;
   const response = await fetch(`${url}/rest/v1/listings?id=eq.${encodeURIComponent(id)}&select=id,title,description,price,category,image_url,created_at&limit=1`, { headers: headers(), cache: "no-store" });
   if (!response.ok) throw new Error("Could not load this listing.");
